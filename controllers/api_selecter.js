@@ -1,10 +1,10 @@
 var selecter = require('../models/selecter');
 
 module.exports={
+    //查询字符串测试
     index:function(req,res){
         //GET 传参
         var params=req.query||req.params;
-        
         res.send('api_selecter/index');
     },
     daily:function(req,res){
@@ -16,5 +16,10 @@ module.exports={
     },
     weekly:function(req,res){
         res.send('api_selecter/weekly');
+    },
+    //cookie测试
+    cookie:function(req,res){
+        console.log(req.cookies);
+        res.json(req.cookies);
     }
 }

@@ -15,5 +15,9 @@ router.get('/weekly', function (req, res) {
     Api_selecter.weekly(req,res);
 });
 
+router.get('/cookie', function (req, res) {
+    Api_selecter.cookie(req,res);
+});
+
 
 module.exports = router;

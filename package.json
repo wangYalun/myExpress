@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node index.js",
-    "start":"supervisor index.js"
+    "start": "supervisor index.js"
   },
   "keywords": [
     "express",
@@ -17,6 +17,7 @@
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "mysql": "^2.12.0"
   }
 }
