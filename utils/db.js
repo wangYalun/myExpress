@@ -17,10 +17,10 @@ DB.prototype.connect = function () {
     return connection;
 };
 
-DB.prototype.query = function (sql) {
+DB.prototype.query = function (sql,args) {
     var connection = this.connect();
     var promise = new Promise(function (resolve, reject) {
-        connection.query(sql, function (err, rows, fields) {
+        connection.query(sql, args,function (err, rows, fields) {
             if (err) {
                 reject(err);
             } else {
@@ -33,7 +33,8 @@ DB.prototype.query = function (sql) {
     return promise;
 };
 
-var db = {};
+var db = new DB(dbConfig['default']);
+
 for (var index in dbConfig) {
     db[index] = new DB(dbConfig[index]);
 }
