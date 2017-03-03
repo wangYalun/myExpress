@@ -33,6 +33,12 @@ DB.prototype.query = function (sql,args) {
     return promise;
 };
 
+DB.prototype.getOne=function(){
+
+};
+
+
+
 var db = new DB(dbConfig['default']);
 
 for (var index in dbConfig) {

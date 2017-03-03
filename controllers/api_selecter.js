@@ -5,7 +5,7 @@ module.exports={
     index:function(req,res){
         //GET 传参
         var params=req.query||req.params;
-        res.send('api_selecter/index');
+        res.json(params);
     },
     daily:function(req,res){
         //将参数传到对应模型,然后由模型返回result,再处理result
