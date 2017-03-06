@@ -113,6 +113,10 @@ DB.prototype.insert = function (table, valueObj) {
     return this.query(sql);
 }
 
+DB.prototype.insertBatch=function(table,valueArr){
+
+};
+
 // DB.prototype.query = function (sql, args) {
 //     var connection = this.connect();
 //     var promise = new Promise(function (resolve, reject) {
