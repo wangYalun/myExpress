@@ -10,6 +10,9 @@ function login(username,password){
     return promise;
 }
 
+login.log=function(obj){
+    db.insert('table name',obj);
+}
 module.exports={
     login:login
 }
