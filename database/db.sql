@@ -42,3 +42,5 @@ create table `admin_login_captcha`(
     `success_time` timestamp not null comment '验证成功时间',
     primary key(`id`)
 )engine=InnoDB default charset=utf8;
+
+
