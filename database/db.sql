@@ -39,7 +39,7 @@ create table `admin_login_captcha`(
     `captcha_code` char(4) not null comment '随机生成的验证码',
     `server_time` timestamp not null comment '验证生成时间',
     `is_success` char(1) not null default 'N' comment '是否验证成功',
-    `success_time` timestamp not null comment '验证成功时间',
+    `success_time` timestamp not null DEFAULT CURRENT_TIMESTAMP comment '验证成功时间',
     primary key(`id`)
 )engine=InnoDB default charset=utf8;
 
