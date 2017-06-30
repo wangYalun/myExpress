@@ -29,21 +29,18 @@ app.use(cpUpload);
 
 app.use(cookieParser());
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 
-// app.get('/', function (req, res) {
+app.get('/', function (req, res) {
 
-//     //res.send('Hello World');
-//     console.log(req.query);
-//     console.log(req.params);
-//     res.json(req.query || req.params);
+    res.send('Hello ,NodeJS JSON API');
 
-// });
-app.all('*', function(req, res, next) {
+});
+app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     //res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
@@ -51,12 +48,12 @@ app.all('*', function(req, res, next) {
 
 
 
-//加载相关控制器路由
-var routers = fs.readdirSync('./routers');
-for (var index in routers) {
-    var file = routers[index];
+//加载API相关控制器路由
+var routersAPI = fs.readdirSync('./routers/api');
+for (var index in routersAPI) {
+    var file = routersAPI[index];
     var name = file.replace('.js', '');
-    app.use('/' + name, require('./routers/' + name));
+    app.use('/api/' + name, require('./routers/api/' + name));
 }
 
 var server = app.listen(8081, function () {
