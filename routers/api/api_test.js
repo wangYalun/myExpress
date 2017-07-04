@@ -39,4 +39,9 @@ router.put('/products', function (req, res) {
     res.json(req.body);
 });
 
+
+router.get('/test',function(req,res){
+    
+});
+
 module.exports = router;

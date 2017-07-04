@@ -11,7 +11,7 @@ apiSelecter.today = function (req, res) {
     var paramsObj = it.checkParam(req);
     if (!paramsObj.isTrue) {
         res.send(paramsObj.errorMsg);
-        return;
+        return; 
     }
     var params = paramsObj.params;
 
