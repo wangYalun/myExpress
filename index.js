@@ -49,12 +49,15 @@ app.all('*', function (req, res, next) {
 
 
 //加载API相关控制器路由
-var routersAPI = fs.readdirSync('./routers/api');
-for (var index in routersAPI) {
-    var file = routersAPI[index];
-    var name = file.replace('.js', '');
-    app.use('/api/' + name, require('./routers/api/' + name));
-}
+// var routersAPI = fs.readdirSync('./routers/api');
+// for (var index in routersAPI) {
+//     var file = routersAPI[index];
+//     var name = file.replace('.js', '');
+//     app.use('/api/' + name, require('./routers/api/' + name));
+// }
+var API = require('./routers/api/index');
+
+app.use('/api', API);
 
 var server = app.listen(8081, function () {
     var host = server.address().address;

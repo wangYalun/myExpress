@@ -27,9 +27,7 @@ router.get('/products', function (req, res) {
 });
 
 router.post('/products', function (req, res) {
-    console.log(req.body);
-    console.log(req.params);
-    res.json(req.params);
+    res.json(req.body);
 });
 
 router.delete('/products', function (req, res) {

@@ -25,6 +25,22 @@ apiLogin.login = function (req, res) {
 
     });
 };
+apiLogin.dapeng = function (req, res) {
+    var it = this;
+    var params = {
+        username: req.body.username || "",
+        password: req.body.password || ""
+    }
+
+    admin.login(params.username, params.password).then(function (result) {
+        if (result.length === 0) {
+            it.returnData(res, {}, 403, "用户名或密码错误");
+        } else {
+            result[0].login_token = jwt.sign({ uid: result[0].uid, iat: Math.floor(Date.now() / 1000) - 30 }, 'allen');
+            it.returnData(res, result[0]);
+        }
+    });
+}
 
 apiLogin.register = function (req, res) {
     var it = this;

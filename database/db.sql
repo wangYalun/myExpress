@@ -14,7 +14,7 @@ create table `admin_user`(
     `nickname` varchar(50) not null default '' comment '', 
     `create_time` timestamp not null DEFAULT CURRENT_TIMESTAMP comment '注册时间',
     `flag` char(1) not null default 'Y' comment '账号是否禁用',
-    `update_time` timestamp not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
+    `update_time` timestamp not null ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     primary key(`uid`),
     unique key `email_key`(`email`)
 )engine=InnoDB default charset=utf8;

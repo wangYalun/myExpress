@@ -1,18 +1,25 @@
-var db=require('../utils/db');
+var db = require('../utils/db');
 
 
-function login(username,password){
+function login(username, password) {
 
-    var promise=new Promise(function(resolve,reject){
-        db.query("select uid,email,nickname,flag from admin_user where email=? and password=md5(?)",[username,password])
-        .then(resolve);
+    var promise = new Promise(function (resolve, reject) {
+        db.query("select uid,email,nickname,flag from admin_user where email=? and password=md5(?)", [username, password])
+            .then(resolve);
     });
     return promise;
 }
 
-login.log=function(obj){
-    db.insert('table name',obj);
+function dapengLogin(username, password) {
+    return new Promise(function (resolve, reject) {
+        db.query("select * from where username=? and password=md5(?)", [username, password]).then(resolve);
+    });
 }
-module.exports={
-    login:login
+
+login.log = function (obj) {
+    db.insert('table name', obj);
+}
+module.exports = {
+    login: login,
+    dapengLogin: dapengLogin
 }
