@@ -6,6 +6,8 @@ var router = express.Router();
 var selecter = require('../../controllers/api/selecter');
 var apiLogin = require('../../controllers/api_login');
 
+var admin_login_log = require('../../controllers/api/admin_login_log');
+
 
 var jwt = require('jsonwebtoken');
 
@@ -32,5 +34,14 @@ router.post('/login', function (req, res) {
 });
 
 router.get('/selecter/today', auth.loginToken, selecter.today);
+
+
+router
+    .get('/admin_login_log', auth.loginToken, admin_login_log.getAllorOne)
+    .get('/admin_login_log/:id', auth.loginToken, admin_login_log.getAllorOne)
+    .post('/admin_login_log', auth.loginToken, admin_login_log.new)
+    .put('/admin_login_log/:id', auth.loginToken, admin_login_log.update)
+    .delete('/admin_login_log/:id', auth.loginToken, admin_login_log.delete);
+;
 
 module.exports = router;

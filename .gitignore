@@ -3,6 +3,10 @@ Thumbs.db
 ehthumbs.db
 node_modules
 logs
+# 忽略配置文件
+config/database.js
+# 忽略自定义测试文件
+node_test
 
 
 # Folder config file

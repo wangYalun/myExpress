@@ -88,10 +88,18 @@ DB.prototype.get = function (table, limit, offset) {
     return this.query(sql);
 };
 
+/**
+ * 获取相关表的查询
+ * @param {string} table 表的名称
+ * @param {Object} filterObj 过滤键值对
+ * @param {number} limit 限制数据条数
+ * @param {number} offset 从哪条数据开始
+ */
 DB.prototype.getWhere = function (table, filterObj, limit, offset) {
     var sql = DB.queryFormat("select * from ?", [table]);
     sql = DB.whereFormat(sql, filterObj);
     sql = DB.limitFormat(sql, limit, offset);
+    console.log(sql);
     return this.query(sql);
 };
 
@@ -99,7 +107,12 @@ DB.prototype.getWhere = function (table, filterObj, limit, offset) {
 
 
 
-
+/**
+ * 插入一条记录
+ * @param {string} table 表名称
+ * @param {Object} valueObj 数据键值对
+ * @return {Promise} 查询结果
+ */
 DB.prototype.insert = function (table, valueObj) {
 
     var _keys = [], keys = [], _values = [], values = [];
@@ -112,8 +125,14 @@ DB.prototype.insert = function (table, valueObj) {
     var sql = DB.queryFormat("insert into " + table + "(" + _keys.join(",") + ") values(" + _values.join(",") + ")", keys.concat(values));
     return this.query(sql);
 }
+DB.prototype.delete = function (table, filterObj) {
+    var sql = DB.queryFormat("delete from ?", [table]);
+    sql = DB.whereFormat(sql, filterObj);
+    console.log(sql);
+    return this.query(sql);
+}
 
-DB.prototype.insertBatch=function(table,valueArr){
+DB.prototype.insertBatch = function (table, valueArr) {
 
 };
 
@@ -141,10 +160,14 @@ DB.prototype.getOne = function (sql, args) {
 
 
 
+
+
 var db = new DB(dbConfig['default']);
 
 for (var index in dbConfig) {
     db[index] = new DB(dbConfig[index]);
 }
+
+
 
 module.exports = db;
