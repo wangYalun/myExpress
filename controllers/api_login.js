@@ -22,7 +22,6 @@ apiLogin.login = function (req, res) {
             result[0].login_token = jwt.sign({ uid: result[0].uid, iat: Math.floor(Date.now() / 1000) - 30 }, 'allen');
             it.returnData(res, result[0]);
         }
-
     });
 };
 apiLogin.dapeng = function (req, res) {

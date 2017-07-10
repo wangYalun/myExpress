@@ -1,3 +1,5 @@
+
+//https://github.com/mysqljs/mysql
 var mysql = require('mysql');
 var dbConfig = require('../config/database');
 
@@ -12,12 +14,24 @@ function DB(config) {
 }
 
 DB.queryFormat = function (sql, args) {
+    if (mysql.format) {
+        return mysql.format(sql, args);
+    }
     var matchIndex = 0;
     function fn(match, p1, p2) {
-        if (p1) return args[matchIndex++]
-        if (p2) return "'" + args[matchIndex++] + "'";
+        if (p1) return "`" + args[matchIndex++] + "`"
+        if (p2) {
+            var arg = "";
+            if (typeof args[matchIndex] === 'string') {
+                arg = "'" + args[matchIndex] + "'";
+            } else {
+                arg = args[matchIndex];
+            }
+            matchIndex++;
+            return arg;
+        }
     }
-    return sql.replace(/(\?)|('\?')/g, fn);
+    return sql.replace(/(\?\?)|(\?)/g, fn);
 };
 
 DB.limitFormat = function (sql, limit, offset) {
@@ -33,10 +47,33 @@ DB.whereFormat = function (sql, filterObj) {
     var _where = [];
     var whereFilterArray = [];
     for (var i in filterObj) {
-        _where.push("?='?'");
-        whereFilterArray.push(i, filterObj[i]);
-    };
+        if (typeof filterObj[i] === 'object') {
+            if (filterObj[i].isLike) {
+                _where.push("?? like ?");
+                whereFilterArray.push(i, filterObj[i].isPrefix ? filterObj[i].value + "%" : (filterObj[i].isSuffix ? "%" + filterObj[i].value : "%" + filterObj[i].value + "%"));
+            } else {
+                _where.push("??=?");
+                whereFilterArray.push(i, filterObj[i].value);
+            }
+        } else {
+            _where.push("??=?");
+            whereFilterArray.push(i, filterObj[i]);
+        }
+    }
+    if (_where.length === 0) {
+        return sql;
+    }
     return sql + " where " + DB.queryFormat(_where.join(" and "), whereFilterArray);
+}
+
+DB.setValueFormat = function (sql, valueObj) {
+    var _set = [];
+    var setValueArray = [];
+    for (var i in valueObj) {
+        _set.push("??=?");
+        setValueArray.push(i, valueObj[i]);
+    }
+    return sql + " set " + DB.queryFormat(_set.join(" , "), setValueArray);
 }
 
 DB.prototype.connect = function () {
@@ -54,6 +91,7 @@ DB.prototype.connect = function () {
  */
 
 var _query = function (sql, args, callback) {
+    console.log(sql);
     var connection = this.connect();
     connection.query(sql, args, callback);
     connection.end();
@@ -81,12 +119,56 @@ DB.prototype.simpleQuery = function (sql, args) {
     _query.call(this, sql, args);
 }
 
+
+/**
+ * 获取相关表的所有数据，加上
+ */
 DB.prototype.get = function (table, limit, offset) {
 
-    var sql = DB.queryFormat("select * from ?", [table]);
-    sql = DB.limitFormat(sql, limit, offset);
-    return this.query(sql);
+    var it = this;
+
+    var countSQL = DB.queryFormat("select count(*) as size from ??", [table]);
+
+    var promise = new Promise(function (resolve, reject) {
+        it.query(countSQL).then(function (result) {
+            var size = result[0] && result[0].size;
+
+            var sql = DB.queryFormat("select * from ??", [table]);
+            sql = DB.limitFormat(sql, limit, offset);
+
+            it.query(sql).then(function (result) {
+                var obj = {};
+                obj.size = size;
+                obj.data = result;
+                resolve(obj);
+            });
+        })
+    });
+
+    return promise;
 };
+
+/**
+ * 统计查询的数据条数，用于分页
+ * @param {string} table 表名称
+ * @param {Object} filterObj 过滤条件
+ * @param {string}
+ * @return {Promise} 返回数据总条数[{size:xx}]
+ */
+DB.prototype.count = function (table, filterObj, countField, sizeName, ) {
+    var countField = countField || "*", sizeName = sizeName || "size";
+    var sql = DB.queryFormat("select count(" + countField + ") as ?? from ??", [sizeName, table]);
+    sql = DB.whereFormat(sql, filterObj);
+    return this.query(sql);
+}
+/**
+ * 统计查询的数据条数，直接SQL查询，用于分页
+ */
+DB.prototype.countBySQL = function (sql) {
+    return this.query(sql);
+}
+
+
 
 /**
  * 获取相关表的查询
@@ -96,10 +178,9 @@ DB.prototype.get = function (table, limit, offset) {
  * @param {number} offset 从哪条数据开始
  */
 DB.prototype.getWhere = function (table, filterObj, limit, offset) {
-    var sql = DB.queryFormat("select * from ?", [table]);
+    var sql = DB.queryFormat("select * from ??", [table]);
     sql = DB.whereFormat(sql, filterObj);
     sql = DB.limitFormat(sql, limit, offset);
-    console.log(sql);
     return this.query(sql);
 };
 
@@ -117,46 +198,59 @@ DB.prototype.insert = function (table, valueObj) {
 
     var _keys = [], keys = [], _values = [], values = [];
     for (var i in valueObj) {
-        _keys.push("?");
+        _keys.push("??");
         keys.push(i);
-        _values.push("'?'");
+        _values.push("?");
         values.push(valueObj[i]);
     }
     var sql = DB.queryFormat("insert into " + table + "(" + _keys.join(",") + ") values(" + _values.join(",") + ")", keys.concat(values));
+
     return this.query(sql);
 }
+/**
+ * 删除若干条记录
+ * @param {string} table 表名称
+ * @param {Object} filterObj 过滤键值对对象
+ * @return {Promise} 查询结果
+ */
 DB.prototype.delete = function (table, filterObj) {
-    var sql = DB.queryFormat("delete from ?", [table]);
+    var sql = DB.queryFormat("delete from ??", [table]);
     sql = DB.whereFormat(sql, filterObj);
     console.log(sql);
     return this.query(sql);
 }
-
-DB.prototype.insertBatch = function (table, valueArr) {
+/**
+ * 更新若干条记录
+ * @param {string} table 表名称
+ * @param {Object} valueObj 数据键值对
+ * @param {Object} filterObj 过滤键值对对象
+ * @return {Promise} 查询结果
+ */
+DB.prototype.update = function (table, valueObj, filterObj) {
+    var sql = DB.queryFormat("update ??", [table]);
+    sql = DB.setValueFormat(sql, valueObj);
+    sql = DB.whereFormat(sql, filterObj);
+    console.log(sql);
+    return this.query(sql);
+}
+/**
+ * 插入若干条数据
+ * @param {string} table 表名称
+ * @param {Array<Object>} valueObjArr 数据对象数组
+ * @return {Promise} 查询结果
+ */
+DB.prototype.insertBatch = function (table, valueObjArr) {
 
 };
 
-// DB.prototype.query = function (sql, args) {
-//     var connection = this.connect();
-//     var promise = new Promise(function (resolve, reject) {
-//         connection.query(sql, args, function (err, rows, fields) {
-//             //console.log(fields);
-//             if (err) {
-//                 console.log(err);
-//                 reject(err);
-//             } else {
-//                 //console.log();
-//                 resolve(rows);
-//             }
-//         });
-//         connection.end();
-//     });
-//     return promise;
-// };
-
+/**
+ * 只获取匹配的第一条数据
+ * 
+ */
 DB.prototype.getOne = function (sql, args) {
 
 }
+
 
 
 

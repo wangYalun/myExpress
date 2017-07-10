@@ -38,10 +38,12 @@ router.get('/selecter/today', auth.loginToken, selecter.today);
 
 router
     .get('/admin_login_log', auth.loginToken, admin_login_log.getAllorOne)
+    .get('/admin_login_log/search', auth.loginToken, admin_login_log.search)
     .get('/admin_login_log/:id', auth.loginToken, admin_login_log.getAllorOne)
     .post('/admin_login_log', auth.loginToken, admin_login_log.new)
     .put('/admin_login_log/:id', auth.loginToken, admin_login_log.update)
     .delete('/admin_login_log/:id', auth.loginToken, admin_login_log.delete);
+
 ;
 
 module.exports = router;

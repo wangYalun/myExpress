@@ -1,53 +1,61 @@
 /**
  * node 测试 数据库类
  */
-// var db = require('./utils/db');
+var db = require('./utils/db');
+
+var _ = require('underscore');
 
 
 //直接查询
-db.query("show tables").then(function (result) {
-    console.log(result);
+(function () {
+    db.query("show tables").then(function (result) {
+        console.log(result);
+    });
+
+    //
+
+    //db.simpleQuery("insert into `admin_user`(email,mobile_phone,password,nickname) values('allen.wang@gaopeng.com','18600699358',md5('18942339954wang'),'卡卡罗特伦')");
+
+    // db.get('admin_user',1,0).then(function(result){
+    //     console.log("affectedRows:",result.affectedRows);
+    //     console.log(result);
+    // });
+
+    db.getWhere('admin_user', { email: "326402399@qq.com" }).then(function (result) {
+        console.log(result);
+    });
+
+    db.insert('admin_user', { email: "fa132132113212311sd", mobile_phone: "fasdf", password: "1423412", nickname: 'fasdfa' })
+        .then(function (result) {
+            console.log("insertID:", result.insertId);
+            console.log("affectedRows:", result.affectedRows);
+            console.log("changedRows:", result.changedRows);
+        }, function (err) {
+
+        });
 });
-
-//
-
-//db.simpleQuery("insert into `admin_user`(email,mobile_phone,password,nickname) values('allen.wang@gaopeng.com','18600699358',md5('18942339954wang'),'卡卡罗特伦')");
-
-// db.get('admin_user',1,0).then(function(result){
-//     console.log("affectedRows:",result.affectedRows);
-//     console.log(result);
-// });
-
-db.getWhere('admin_user',{email:"326402399@qq.com"}).then(function(result){
-    console.log(result);
-});
-
-db.insert('admin_user',{email:"fa132132113212311sd",mobile_phone:"fasdf",password:"1423412",nickname:'fasdfa'})
-.then(function(result){
-    console.log("insertID:",result.insertId);
-    console.log("affectedRows:",result.affectedRows);
-    console.log("changedRows:",result.changedRows);
-},function(err){
-
+(function () {
+    db.query("select count(*) as size from admin_login_log;select * from admin_login_log").then(function (result) {
+        //console.log(typeof result);
+        console.log(result);
+    });
 });
 
 (function () {
-    var numArray = [1, 3, 5, 7, 9, 11, 13, 15];
-
-    numArray.forEach(function (item) {
-        var num1 = item;
-        numArray.forEach(function (item) {
-            var num2 = item;
-            numArray.forEach(function (item) {
-                var num3 = item;
-                //console.log(num1,num2,num3);
-                if (num1 + num2 + num3 === 30) {
-                    console.log(num1, num2, num3);
-                }
-            });
-        });
+    db.get('admin_login_log', 1, 10).then(function (result) {
+        console.log(result);
     });
+    db.count('admin_login_log').then(function (result) {
+        console.log(result);
+    });
+});
+
+(function () {
+    var obj = _.pick.apply(_, [{ name: 'allen', age: 20 }, 'name']);
+    console.log(obj);
 })();
+
+
 
 
 

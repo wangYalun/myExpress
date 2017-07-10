@@ -1,15 +1,30 @@
 var express = require('express');
 var app = express();
-var fs = require('fs');
+//日志输出系统
+var log4js = require('log4js');
+
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+
+var multer = require('multer');
 
 app.locals.address = "localhost";
 app.locals.port = "8081";
 app.locals.email = "326402399@qq.com";
 //app.locals.strftime=require("strftime");
 
-var multer = require('multer');
+log4js.configure({
+    appenders: [
+        {
+            type: 'DateFile',
+            filename: 'access.log',
+            pattern: '-yyyy-MM-dd.log',
+            alwaysIncludePattern: true,
+            category: 'access'
+        }
+    ]
+});
+app.use(log4js.connectLogger(log4js.getLogger('access'), { level: log4js.levels.INFO }));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
