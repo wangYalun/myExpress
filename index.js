@@ -14,17 +14,19 @@ app.locals.email = "326402399@qq.com";
 //app.locals.strftime=require("strftime");
 
 log4js.configure({
-    appenders: [
-        {
-            type: 'DateFile',
-            filename: 'access.log',
-            pattern: '-yyyy-MM-dd.log',
-            alwaysIncludePattern: true,
-            category: 'access'
-        }
-    ]
+    appenders: {
+        console: { type: "console" },
+        file: { type: 'file', filename: './logs/cheese.log' }
+    },
+    categories: {
+        cheese: { appenders: ['file'], level: 'info' },
+        default: { appenders: ['console'], level: 'info' }
+    }
 });
-app.use(log4js.connectLogger(log4js.getLogger('access'), { level: log4js.levels.INFO }));
+
+var logger = log4js.getLogger('cheese');
+
+app.use(log4js.connectLogger(logger, { level: 'info' }));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
