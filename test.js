@@ -42,18 +42,27 @@ var _ = require('underscore');
 });
 
 (function () {
-    db.get('admin_login_log', 1, 10).then(function (result) {
+    // db.get('admin_login_log', 1, 10).then(function (result) {
+    //     console.log(result);
+    // });
+    // db.count('admin_login_log').then(function (result) {
+    //     console.log(result);
+    // });
+    //db.search('admin_login_log')
+
+    var local_db = new db.DB(db.config['localhost']);
+
+    local_db.query('select * from admin_user').then(function (result) {
         console.log(result);
+        local_db.endPool();
     });
-    db.count('admin_login_log').then(function (result) {
-        console.log(result);
-    });
-});
+    // local_db.endPool();
+})();
 
 (function () {
     var obj = _.pick.apply(_, [{ name: 'allen', age: 20 }, 'name']);
     console.log(obj);
-})();
+});
 
 
 

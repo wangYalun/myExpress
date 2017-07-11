@@ -1,5 +1,17 @@
 var db = require('../utils/db');
 
+function handleResult(queryPromise){
+    var promise=new Promise(function(resolve,reject){
+        queryPromise.then(function(result){
+            if(Array.isArray(result)){
+                resolve(result);
+            }else{
+                
+            }
+        });
+    });
+}
+
 
 function login(username, password) {
 

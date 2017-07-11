@@ -1,6 +1,7 @@
 var db = require('../utils/db');
 
 
+
 module.exports = {
     new: function (data) {
         return db.insert('admin_login_log', data);

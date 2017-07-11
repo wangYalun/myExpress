@@ -11,6 +11,8 @@ var dbConfig = require('../config/database');
 
 function DB(config) {
     this.config = config;
+    //默认开启连接池
+    this.pool = this.createPool();
 }
 
 DB.queryFormat = function (sql, args) {
@@ -86,16 +88,35 @@ DB.prototype.connect = function () {
     });
     return connection;
 };
+DB.prototype.createPool = function () {
+    return mysql.createPool(this.config);
+}
+DB.prototype.endPool = function () {
+    if (this.pool) {
+        this.pool.end();
+    }
+}
 /**
  * 直接执行 SQL 
  */
 
-var _query = function (sql, args, callback) {
+var _query_ = function (sql, args, callback) {
     console.log(sql);
     var connection = this.connect();
     connection.query(sql, args, callback);
     connection.end();
 };
+
+var _query = function (sql, args, callback) {
+    this.pool.getConnection(function (err, connection) {
+        if (err) {
+            console.error('error connecting: ' + err.stack);
+            return;
+        }
+        connection.query(sql, args, callback);
+        connection.release();
+    });
+}
 
 DB.prototype.query = function (sql, args) {
     var it = this;
@@ -258,10 +279,14 @@ DB.prototype.getOne = function (sql, args) {
 
 var db = new DB(dbConfig['default']);
 
-for (var index in dbConfig) {
-    db[index] = new DB(dbConfig[index]);
-}
+// for (var index in dbConfig) {
+//     db[index] = new DB(dbConfig[index]);
+// }
 
 
 
 module.exports = db;
+
+module.exports.config = dbConfig;
+
+module.exports.DB = DB;
