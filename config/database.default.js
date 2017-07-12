@@ -1,16 +1,16 @@
 module.exports = {
     "default": {
-        host: '39.108.231.153',
-        user: 'allen_remote',
-        password: 'allen123',
-        database: 'db_repository_1', // 前面建的user表位于这个数据库中
+        host: '39.108.231.153',//填写数据库地址
+        user: 'username', //用户名
+        password: '****',//
+        database: 'data',// 默认连接数据库 
         port: 3306
     },
     "localhost": {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'db_repository_1', // 前面建的user表位于这个数据库中
+        database: 'xxxx', 
         port: 3306
     }
 };
