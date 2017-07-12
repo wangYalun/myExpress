@@ -7,6 +7,7 @@ logs
 config/database.js
 # 忽略自定义测试文件
 node_test
+test.js
 
 
 # Folder config file

@@ -57,12 +57,33 @@ var _ = require('underscore');
         local_db.endPool();
     });
     // local_db.endPool();
+});
+
+var fs = require('fs');
+(function () {
+    var ydbus_db = new db.DB(db.config['ydbus']);
+
+    ydbus_db.query('show tables').then(function (result) {
+
+        result.map(function (item, index) {
+            ydbus_db.query('show create table ' + item.Tables_in_ydbus).then(function (result) {
+                fs.writeFile('./database/ydbus.sql', result[0]['Create Table'] + ";\n", { flag: 'a' }, function (err) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                });
+            });
+        });
+
+    });
 })();
 
 (function () {
     var obj = _.pick.apply(_, [{ name: 'allen', age: 20 }, 'name']);
     console.log(obj);
 });
+
+
 
 
 
