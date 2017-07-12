@@ -1,16 +1,16 @@
 NodeJS 后端服务
 
 ### 安装
-<pre>
+```
     $ npm install
-</pre>
+```
 
 ### 运行
-<pre>
-    $ npm start
-    或者
-    $ npm test
-</pre>
+```
+    $ npm run start
+    //或者
+    $ npm run test
+```
  
 ### 代码编写
 

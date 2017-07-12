@@ -9,7 +9,10 @@
   },
   "keywords": [
     "express",
-    "allen"
+    "mysql",
+    "nodejs",
+    "promise",
+    "RESTfull API"
   ],
   "author": "allen",
   "license": "ISC",
