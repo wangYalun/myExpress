@@ -1,16 +1,16 @@
-NodeJS 后端服务
+优点BUS NodeJS 后端服务(测试阶段)
 
 ### 安装
-<pre>
+```
     $ npm install
-</pre>
+```
 
 ### 运行
-<pre>
-    $ npm start
+```
+    $ npm run start
     或者
-    $ npm test
-</pre>
+    $ npm run test
+```
  
 ### 代码编写
 
@@ -21,7 +21,7 @@ NodeJS 后端服务
 
 - [controllers]()
 >控制器类放在该目录下面
-<pre>
+```
     控制器有个基类，提供了一些基本的方法，包括查询参数验证，统一返回数据格式方法
     例如：
     var admin = require('../models/admin');
@@ -33,7 +33,7 @@ NodeJS 后端服务
     apiLogin.login = function (req, res) {}
 
     module.exports = apiLogin;
-</pre>
+```
 
 - [models]()
 > 模型层代码放在该目录下
