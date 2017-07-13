@@ -46,14 +46,14 @@ app.use(cpUpload);
 
 app.use(cookieParser());
 
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 
-app.get('/', function (req, res) {
+// app.get('/', function (req, res) {
 
-    res.send('Hello ,NodeJS JSON API');
+//     res.send('Hello ,NodeJS JSON API');
 
-});
+// });
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -76,7 +76,7 @@ var API = require('./routers/api/index');
 
 app.use('/api', API);
 
-var server = app.listen(8081, function () {
+var server = app.listen(8082, function () {
     var host = server.address().address;
     var port = server.address().port;
 

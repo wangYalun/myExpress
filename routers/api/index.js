@@ -43,7 +43,15 @@ router
     .post('/admin_login_log', auth.loginToken, admin_login_log.new)
     .put('/admin_login_log/:id', auth.loginToken, admin_login_log.update)
     .delete('/admin_login_log/:id', auth.loginToken, admin_login_log.delete);
-
 ;
+
+
+router.get('/test', function (req, res) {
+
+    res.cookie("name","allen");
+    res.json(req.method);
+});
+
+
 
 module.exports = router;
