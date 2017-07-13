@@ -3,6 +3,8 @@
 var mysql = require('mysql');
 var dbConfig = require('../config/database');
 
+var uuid = require('uuid/v1');
+
 // module.exports={
 //     connect:function(){
 //         var connect=mysql.createConnection()
@@ -15,6 +17,9 @@ function DB(config) {
     this.pool = this.createPool();
 }
 
+DB.uuid = function () {
+    return uuid();
+}
 DB.queryFormat = function (sql, args) {
     if (mysql.format) {
         return mysql.format(sql, args);
@@ -45,10 +50,17 @@ DB.limitFormat = function (sql, limit, offset) {
     }
 };
 
-DB.whereFormat = function (sql, filterObj) {
+DB.whereFormat = function (sql, filterObj, whereOrAnd, isOr) {
+    if (!filterObj) {
+        return sql;
+    }
     var _where = [];
     var whereFilterArray = [];
+
     for (var i in filterObj) {
+        if (i === 'query_name') {
+            continue;
+        }
         if (typeof filterObj[i] === 'object') {
             if (filterObj[i].isLike) {
                 _where.push("?? like ?");
@@ -62,10 +74,23 @@ DB.whereFormat = function (sql, filterObj) {
             whereFilterArray.push(i, filterObj[i]);
         }
     }
+    if (typeof filterObj['query_name'] === 'object') {
+        var fields = filterObj['query_name'].fields || [];
+        var or_array = [];
+        fields.forEach(function (value, index) {
+            or_array.push("?? like ?");
+            whereFilterArray.push(value, "%" + filterObj['query_name'].value + "%");
+        });
+        _where.push("(" + or_array.join(" or ") + ")");
+    }
     if (_where.length === 0) {
         return sql;
     }
-    return sql + " where " + DB.queryFormat(_where.join(" and "), whereFilterArray);
+
+    return sql + " " + (whereOrAnd || "where") + " " + DB.queryFormat(_where.join(isOr ? " or " : " and "), whereFilterArray);
+}
+DB.orFormat = function (sql, filterObj, whereOrAnd) {
+    return DB.whereFormat(sql, filterObj, whereOrAnd, true);
 }
 
 DB.setValueFormat = function (sql, valueObj) {
@@ -108,6 +133,7 @@ var _query_ = function (sql, args, callback) {
 };
 
 var _query = function (sql, args, callback) {
+    console.log(sql);
     this.pool.getConnection(function (err, connection) {
         if (err) {
             console.error('error connecting: ' + err.stack);
@@ -269,6 +295,7 @@ DB.prototype.insertBatch = function (table, valueObjArr) {
  * 
  */
 DB.prototype.getOne = function (sql, args) {
+
 
 }
 

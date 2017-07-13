@@ -21,10 +21,12 @@ var strategies = {
         }
     },
     isEmail: function (value, errorMsg) {
-        
+        if (!/^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test(value)) {
+            return errorMsg;
+        }
     },
-    isGaopengEmail:function(value,errorMsg){
-        
+    isGaopengEmail: function (value, errorMsg) {
+
     }
 };
 var Validator = function () {
@@ -51,7 +53,7 @@ Validator.prototype.start = function () {
 var validatorFunc = function (params, validatorArgs) {
     var validator = new Validator(); // 创建一个validator 对象
     /***************添加一些校验规则****************/
-    
+
     if (!validatorArgs) return "";
     for (var i in validatorArgs) {
         validatorArgs[i].unshift(params[validatorArgs[i].shift()]);
@@ -75,12 +77,12 @@ Apibase.prototype.checkParam = function (req, validatorArgs) {
         params: {}
     };
 
-    if (req.route.methods.post) {
+    if (req.method === 'GET' || req.method === "DELETE") {
+        params = req.query;
+    } else if (req.method === 'POST' || req.method === 'PUT') {
         params = req.body;
-    } else if (req.route.methods.get) {
-        params = req.params || req.query;
     } else {
-        return obj;
+        params
     }
 
     obj.params = params;

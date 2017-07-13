@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 //日志输出系统
-var log4js = require('log4js');
+//var log4js = require('log4js');
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -13,20 +13,20 @@ app.locals.port = "8081";
 app.locals.email = "326402399@qq.com";
 //app.locals.strftime=require("strftime");
 
-log4js.configure({
-    appenders: {
-        console: { type: "console" },
-        file: { type: 'file', filename: './logs/cheese.log' }
-    },
-    categories: {
-        cheese: { appenders: ['file'], level: 'info' },
-        default: { appenders: ['console'], level: 'info' }
-    }
-});
+//日志记录
+// log4js.configure({
+//     appenders: {
+//         console: { type: "console" },
+//         file: { type: 'file', filename: './logs/cheese.log' }
+//     },
+//     categories: {
+//         cheese: { appenders: ['file'], level: 'info' },
+//         default: { appenders: ['console'], level: 'info' }
+//     }
+// });
 
-var logger = log4js.getLogger('cheese');
-
-app.use(log4js.connectLogger(logger, { level: 'info' }));
+//var logger = log4js.getLogger('cheese');
+//app.use(log4js.connectLogger(logger, { level: 'info' }));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -76,7 +76,7 @@ var API = require('./routers/api/index');
 
 app.use('/api', API);
 
-var server = app.listen(8081, function () {
+var server = app.listen(8082, function () {
     var host = server.address().address;
     var port = server.address().port;
 
