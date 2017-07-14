@@ -76,7 +76,7 @@ var API = require('./routers/api/index');
 
 app.use('/api', API);
 
-var server = app.listen(8082, function () {
+var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;
 

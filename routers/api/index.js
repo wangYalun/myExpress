@@ -49,8 +49,12 @@ router
 router.get('/test', function (req, res) {
 
     res.cookie("name","allen");
-    res.json(req.method);
+    res.json(req.headers);
 });
+
+router.get('/download',function(req,res){
+    res.download('./index.js');
+})
 
 
 
