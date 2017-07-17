@@ -1,6 +1,9 @@
 var db = require('../utils/db');
 
 
+db = new db.DB(db.config['localhost']);
+
+
 
 module.exports = {
     new: function (data) {
