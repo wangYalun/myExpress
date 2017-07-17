@@ -23,16 +23,6 @@
 >控制器类放在该目录下面
 ```
     控制器有个基类，提供了一些基本的方法，包括查询参数验证，统一返回数据格式方法
-    例如：
-    var admin = require('../models/admin');
-    var apibase = require('./api_base');
-    var jwt = require('jsonwebtoken');
-
-    var apiLogin = Object.create(apibase);
-
-    apiLogin.login = function (req, res) {}
-
-    module.exports = apiLogin;
 ```
 
 - [models]()

@@ -1,5 +1,5 @@
 /**
- * 测试用接口
+ * 报表使用的接口
  */
 
 var express = require('express');

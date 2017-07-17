@@ -74,9 +74,13 @@ app.all('*', function (req, res, next) {
 // }
 var API = require('./routers/api/index');
 
+var DapengAPI = require('./routers/api/api_dapeng');
+
 app.use('/api', API);
 
-var server = app.listen(8082, function () {
+app.use('/api/dapeng', DapengAPI);
+
+var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;
 

@@ -277,7 +277,7 @@ DB.prototype.update = function (table, valueObj, filterObj) {
     var sql = DB.queryFormat("update ??", [table]);
     sql = DB.setValueFormat(sql, valueObj);
     sql = DB.whereFormat(sql, filterObj);
-    console.log(sql);
+    //console.log(sql);
     return this.query(sql);
 }
 /**

@@ -1112,19 +1112,28 @@ CREATE TABLE `station_arrive_remind` (
   `remind_station_index` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--投诉建议表
 CREATE TABLE `suggestion` (
   `id` varchar(255) NOT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `create_user_id` varchar(255) DEFAULT NULL,
-  `modify_date` datetime DEFAULT NULL,
-  `modify_user_id` varchar(255) DEFAULT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  `line_id` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL comment '创建日期',
+  `create_user_id` varchar(255) DEFAULT NULL comment '创建者用户ID，APP端用户',
+  `modify_date` datetime DEFAULT NULL comment '修改日期',
+  `modify_user_id` varchar(255) DEFAULT NULL comment '修改用户ID，管理后台用户ID',
+  `content` varchar(255) DEFAULT NULL comment '投诉&建议内容',
+  `line_id` varchar(255) DEFAULT NULL comment '投诉线路ID,暂时无用',
+  `type` varchar(255) DEFAULT NULL comment '问题类型',
   `user_id` varchar(255) DEFAULT NULL,
-  `type_num` varchar(255) DEFAULT NULL,
+  `type_num` varchar(255) DEFAULT NULL comment '问题类型编号，关联suggestion_type.type_num',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- 投诉建议表增加字段
+alter table `suggestion` add `msg_content` varchar(255) not null default '' comment '发送短信内容',
+`status` int unsigned not null comment '处理状态,0待处理，1已处理',
+`status_name` varchar(255) default '' comment '状态名称',
+`processer_name` varchar(255) not null default '' comment '处理人',
+`process_content` varchar(255) not null default '' comment '处理内容（备注）';
+
 CREATE TABLE `station_time` (
   `id` varchar(255) NOT NULL,
   `create_date` datetime DEFAULT NULL,
