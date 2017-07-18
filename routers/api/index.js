@@ -9,6 +9,8 @@ var line = require('../../controllers/api/line/commute');
 
 var notice = require('../../controllers/api/line/notice');
 
+var reportLine = require('../../controllers/api/report/line');
+
 var apiLogin = require('../../controllers/api_login');
 
 var admin_login_log = require('../../controllers/api/admin_login_log');
@@ -45,6 +47,10 @@ router.get(lineRouterPath, line.getCommute)
 // .delete(lineRouterPath, line.delete);
 
 router.get('/notice', notice.getNotice).put('/notice/:id', notice.updateNotice);
+
+//报表统计
+var reportRouterPath = "/report/line";
+router.get(reportRouterPath, reportLine.getLine)
 
 
 

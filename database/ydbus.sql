@@ -632,32 +632,33 @@ CREATE TABLE `line_statistic_month` (
   `occupancy_rate` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+--线路班次日报表
 CREATE TABLE `line_statistic_daily` (
-  `id` varchar(255) NOT NULL,
-  `create_date` datetime DEFAULT NULL,
+  `id` varchar(255) NOT NULL comment 'UUID',
+  `create_date` datetime DEFAULT NULL comment '创建日期',
   `create_user_id` varchar(255) DEFAULT NULL,
   `modify_date` datetime DEFAULT NULL,
   `modify_user_id` varchar(255) DEFAULT NULL,
-  `date` varchar(255) DEFAULT NULL,
-  `org_id` varchar(255) DEFAULT NULL,
-  `org_name` varchar(255) DEFAULT NULL,
-  `line_id` varchar(255) DEFAULT NULL,
-  `line_name` varchar(255) DEFAULT NULL,
-  `line_no` varchar(255) DEFAULT NULL,
-  `service_num` double DEFAULT NULL,
-  `people_num` double DEFAULT NULL,
-  `refund_num` double DEFAULT NULL,
-  `seat_num` double DEFAULT NULL,
-  `ticket_price` double DEFAULT NULL,
-  `mileage` double DEFAULT NULL,
-  `occupancy_rate` double DEFAULT NULL,
-  `start_time` varchar(255) DEFAULT NULL,
-  `ticket_num` double DEFAULT NULL,
-  `bus_no` varchar(255) DEFAULT NULL,
-  `bus_id` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL comment '班次日期',
+  `org_id` varchar(255) DEFAULT NULL comment '组织公司ID',
+  `org_name` varchar(255) DEFAULT NULL comment '组织公司名称',
+  `line_id` varchar(255) DEFAULT NULL comment '线路ID',
+  `line_name` varchar(255) DEFAULT NULL comment '线路名称',
+  `line_no` varchar(255) DEFAULT NULL comment '线路编号',
+  `service_num` double DEFAULT NULL comment '服务次数',
+  `people_num` double DEFAULT NULL comment '',
+  `refund_num` double DEFAULT NULL comment '退票次数',
+  `seat_num` double DEFAULT NULL comment '座位数',
+  `ticket_price` double DEFAULT NULL comment '车票价格',
+  `mileage` double DEFAULT NULL comment '里程数',
+  `occupancy_rate` double DEFAULT NULL comment '入座率',
+  `start_time` varchar(255) DEFAULT NULL comment '发车时间',
+  `ticket_num` double DEFAULT NULL comment '车票数',
+  `bus_no` varchar(255) DEFAULT NULL comment '车牌号',
+  `bus_id` varchar(255) DEFAULT NULL comment '车辆ID',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-undefined;
+
 CREATE TABLE `line_vote` (
   `id` varchar(255) NOT NULL,
   `create_date` datetime DEFAULT NULL,
@@ -1123,7 +1124,7 @@ CREATE TABLE `suggestion` (
   `content` varchar(255) DEFAULT NULL comment '投诉&建议内容',
   `line_id` varchar(255) DEFAULT NULL comment '投诉线路ID,暂时无用',
   `type` varchar(255) DEFAULT NULL comment '问题类型',
-  `user_id` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL comment '同create_user_id',
   `type_num` varchar(255) DEFAULT NULL comment '问题类型编号，关联suggestion_type.type_num',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

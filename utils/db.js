@@ -114,6 +114,7 @@ DB.prototype.connect = function () {
     return connection;
 };
 DB.prototype.createPool = function () {
+    //console.log(this.config);
     return mysql.createPool(this.config);
 }
 DB.prototype.endPool = function () {
@@ -139,8 +140,12 @@ var _query = function (sql, args, callback) {
             console.error('error connecting: ' + err.stack);
             return;
         }
-        connection.query(sql, args, callback);
-        connection.release();
+        connection.query(sql, args, function (err, rows, fields) {
+            callback(err, rows, fields);
+            connection.release();
+        })
+        // connection.query(sql, args, callback);
+        // connection.release();
     });
 }
 
