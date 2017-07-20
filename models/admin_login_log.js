@@ -1,7 +1,7 @@
 var db = require('../utils/db');
 
 
-db = new db.DB(db.config['localhost']);
+//db = new db.DB(db.config['localhost']);
 
 
 

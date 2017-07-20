@@ -1,14 +1,14 @@
 
-var Base = require('../base');
+        var Base = require('../base');
 
 
-var Model = require('../../../models/line/commute');
+        var Model = require('../../../models/line/commute');
 
-var _ = require('underscore');
+        var _ = require('underscore');
 
-var moment = require('moment');
+        var moment = require('moment');
 
-var uuid = require('uuid/v1');
+        var uuid = require('uuid/v1');
 
 
 

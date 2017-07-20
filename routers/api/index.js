@@ -46,11 +46,17 @@ router.get(lineRouterPath, line.getCommute)
     .put(lineRouterPath + "/:id", line.updateCommute)
 // .delete(lineRouterPath, line.delete);
 
-router.get('/notice', notice.getNotice).put('/notice/:id', notice.updateNotice);
+router.get('/notice', notice.getNotice)
+    .put('/notice/:id', notice.updateNotice)
+    .post('/notice', notice.addNotice);
+
 
 //报表统计
 var reportRouterPath = "/report/line";
 router.get(reportRouterPath, reportLine.getLine)
+    .get(reportRouterPath + "/csv", reportLine.getLineCSV);
+
+router.get('/report/monthly', reportLine.getMonthly);
 
 
 

@@ -51,5 +51,15 @@ module.exports = {
             });
         });
         return promise;
+    },
+    getMonthly: function (filterObj) {
+        var sql = "select line_id,line_no,org_id,org_name,bus_no,line_name,sum(service_num) as service_num,ticket_price,"
+            + "sum(people_num) as people_num,sum(people_num*ticket_price) as money,"
+            + "sum(refund_num) as refund_num from line_statistic_daily "
+            + "where date>=? and date<? "
+            + "group by line_no order by org_id,line_no";
+        sql = db.DB.queryFormat(sql, [filterObj.start_date, filterObj.end_date]);
+
+        return db.query(sql);
     }
 }

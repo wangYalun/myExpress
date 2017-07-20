@@ -103,6 +103,20 @@ DB.setValueFormat = function (sql, valueObj) {
     return sql + " set " + DB.queryFormat(_set.join(" , "), setValueArray);
 }
 
+DB.orderFormat = function (sql, orderObj) {
+    var _order = [];
+    var _orderArr = [];
+    for (var i in orderObj) {
+        if (/^desc$/i.test(orderObj[i])) {
+            _order.push(' ?? desc');
+            _orderArr.push(i);
+        } else {
+            _order.push(' ?? ');
+            _orderArr.push(i);
+        }
+    }
+    return sql + (_order.length ? DB.queryFormat(" order by " + _order.join(','), _orderArr) : "");
+}
 DB.prototype.connect = function () {
     var connection = mysql.createConnection(this.config);
     connection.connect(function (err) {
@@ -229,9 +243,10 @@ DB.prototype.countBySQL = function (sql) {
  * @param {number} limit 限制数据条数
  * @param {number} offset 从哪条数据开始
  */
-DB.prototype.getWhere = function (table, filterObj, limit, offset) {
+DB.prototype.getWhere = function (table, filterObj, limit, offset, orderObj) {
     var sql = DB.queryFormat("select * from ??", [table]);
     sql = DB.whereFormat(sql, filterObj);
+    sql = DB.orderFormat(sql, orderObj);
     sql = DB.limitFormat(sql, limit, offset);
     return this.query(sql);
 };

@@ -6,7 +6,7 @@ module.exports = {
         var promise = new Promise(function (resolve, reject) {
             db.count('system_msg', filterObj).then(function (result) {
                 var size = result[0] && result[0].size;
-                db.getWhere('system_msg', filterObj, limit, offset).then(function (result) {
+                db.getWhere('system_msg', filterObj, limit, offset, { is_available: 'desc', modify_date: 'desc' }).then(function (result) {
                     var obj = {};
                     obj.size = size;
                     obj.rows = result;
@@ -23,5 +23,11 @@ module.exports = {
             db.update('system_msg', { is_available: 0 });
         }
         return db.update('system_msg', data, { id: id });
+    },
+    addNotice: function (data) {
+        if (data.is_available == '1') {
+            db.update('system_msg', { is_available: 0 });
+        }
+        return db.insert('system_msg', data);
     }
 }

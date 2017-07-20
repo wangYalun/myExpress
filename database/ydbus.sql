@@ -1129,7 +1129,8 @@ CREATE TABLE `suggestion` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- 投诉建议表增加字段
-alter table `suggestion` add `msg_content` varchar(255) not null default '' comment '发送短信内容',
+alter table `suggestion` add 
+`msg_content` varchar(255) not null default '' comment '发送短信内容',
 `status` int unsigned not null comment '处理状态,0待处理，1已处理',
 `status_name` varchar(255) default '' comment '状态名称',
 `processer_name` varchar(255) not null default '' comment '处理人',
