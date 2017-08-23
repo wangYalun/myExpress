@@ -6,7 +6,7 @@ logs
 
 config/database.js
 
-node_test
+#node_test
 
 test.js
 

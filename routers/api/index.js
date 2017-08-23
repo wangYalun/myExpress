@@ -53,8 +53,9 @@ router.get('/test', function (req, res) {
 });
 
 router.get('/download',function(req,res){
+    //实现下载文件功能
     res.download('./index.js');
-})
+});
 
 
 
