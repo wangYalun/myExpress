@@ -3,6 +3,9 @@ Thumbs.db
 ehthumbs.db
 node_modules
 logs
+public/static
+public/api_test_upload
+public/upload_files
 
 config/database.js
 

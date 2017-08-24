@@ -129,6 +129,7 @@ CREATE TABLE `charter_line_plan` (
   `end_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `charter_order` (
   `id` varchar(255) NOT NULL,
   `create_date` datetime DEFAULT NULL,
@@ -1459,6 +1460,7 @@ CREATE TABLE `wish_line_vote` (
   `wishLineId` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+--
 CREATE TABLE `version` (
   `id` varchar(255) NOT NULL,
   `create_date` datetime DEFAULT NULL,
@@ -1477,6 +1479,7 @@ CREATE TABLE `version` (
   `content` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- 用户需求表
 CREATE TABLE `wishline` (
   `id` varchar(255) NOT NULL,
   `create_date` datetime DEFAULT NULL,
@@ -1497,3 +1500,45 @@ CREATE TABLE `wishline` (
   `vote_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 大鹏套餐项目 --
+-- 游玩项目表
+CREATE TABLE `travel_item` (
+  `id` varchar(255) NOT NULL comment '项目ID',
+  `create_date` datetime DEFAULT NULL,
+  `create_user_id` varchar(255) DEFAULT NULL,
+  `modify_date` datetime DEFAULT NULL,
+  `modify_user_id` varchar(255) DEFAULT NULL,
+  `base_price` double DEFAULT NULL comment '原价格',
+  `item_name` varchar(255) DEFAULT NULL comment '项目名称',
+  `item_type` varchar(255) DEFAULT NULL comment '项目类型',
+  `peak_base_price` double DEFAULT NULL comment '高峰原价格',
+  `peak_price` double DEFAULT NULL comment '高峰价格',
+  `price` double DEFAULT NULL comment '价格',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 大鹏套餐项目表
+CREATE TABLE `travel_package` (
+  `id` varchar(255) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `create_user_id` varchar(255) DEFAULT NULL,
+  `modify_date` datetime DEFAULT NULL,
+  `modify_user_id` varchar(255) DEFAULT NULL,
+  `adult_limit` int(11) DEFAULT NULL,
+  `base_price` double DEFAULT NULL,
+  `base_price_peak` double DEFAULT NULL,
+  `child_seat_price` double DEFAULT NULL,
+  `floor_price` double DEFAULT NULL,
+  `max_child_limit` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `original_price` double DEFAULT NULL,
+  `original_price_peak` double DEFAULT NULL,
+  `over_view` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+
+
+

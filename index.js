@@ -32,28 +32,31 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 //不能这样使用multer ,详细参考 https://segmentfault.com/q/1010000003050818
 //app.use(multer({ dest: './uploads/' }));// for parsing multipart/form-data
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/images/user')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-});
-var upload = multer({ storage: storage });
-var cpUpload = upload.any();
-app.use(cpUpload);
+
+//参考routers/api/api_test.js file/upload
+//默认文件上传
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './public/upload_files')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname)
+//     }
+// });
+// var upload = multer({ storage: storage });
+// var cpUpload = upload.any();
+// app.use(cpUpload);
 
 app.use(cookieParser());
 
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 
-app.get('/', function (req, res) {
+// app.get('/', function (req, res) {
 
-    res.send('Hello ,NodeJS JSON API');
+//     res.send('Hello ,NodeJS JSON API');
 
-});
+// });
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -76,9 +79,13 @@ var API = require('./routers/api/index');
 
 var DapengAPI = require('./routers/api/api_dapeng');
 
+var APITest = require('./routers/api_test.js');
+
 app.use('/api', API);
 
 app.use('/api/dapeng', DapengAPI);
+
+app.use('/api_test', APITest);
 
 var server = app.listen(8081, function () {
     var host = server.address().address;

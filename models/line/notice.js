@@ -1,7 +1,7 @@
 var db = require('../../utils/db');
 
 module.exports = {
-    getNotice: function (filterObj, limit, offset) {
+    _getNotice: function (filterObj, limit, offset) {
 
         var promise = new Promise(function (resolve, reject) {
             db.count('system_msg', filterObj).then(function (result) {
@@ -16,6 +16,18 @@ module.exports = {
         });
 
         return promise;
+    },
+    //利用Promise.all 改进双层promise 嵌套
+    getNotice: function (filterObj, limit, offset) {
+        return Promise.all([db.count('system_msg', filterObj), db.getWhere('system_msg', filterObj, limit, offset, { is_available: 'desc', modify_date: 'desc' })])
+            .then(resArray => {
+                var sizeResult = resArray[0];
+                var result = resArray[1];
+                return {
+                    size: (sizeResult[0] && sizeResult[0].size) || 0,
+                    rows: result
+                };
+            });
     },
     updateNotice: function (data, id) {
         console.log("updateNotice");
