@@ -23,7 +23,7 @@ $RECYCLE.BIN/
 # Windows Installer files
 npm-debug.log.*
 *.cab
-*.msi
+*.msi 
 *.msm
 *.msp
 

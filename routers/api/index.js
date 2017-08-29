@@ -62,7 +62,7 @@ router.get('/report/monthly', reportLine.getMonthly);
 
 
 router.get('/web_log', function (req, res) {
-    fs.appendFile('./log/remote_debug.log', new Date() + " " + JSON.stringify(req.query) + "\n");
+    fs.appendFile('./logs/remote_debug.log', new Date() + " " + JSON.stringify(req.query) + "\n");
     res.sendStatus(200);
 });
 
