@@ -14,7 +14,7 @@ module.exports = {
         //console.log("token:", token);
         jwt.verify(token, 'allen', function (err, decoded) {
             if (err) {
-                res.json(err);
+                res.json({ code: 400, msg: "login_token 验证失败!", data: err });
             } else {
                 next();
             }

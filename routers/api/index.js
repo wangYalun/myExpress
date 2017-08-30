@@ -11,7 +11,7 @@ var notice = require('../../controllers/api/line/notice');
 
 var reportLine = require('../../controllers/api/report/line');
 
-var apiLogin = require('../../controllers/api_login');
+
 
 var admin_login_log = require('../../controllers/api/admin_login_log');
 
@@ -24,11 +24,13 @@ var fs = require('fs');
 
 
 
-router.post('/login', function (req, res) {
-    apiLogin.login(req, res);
-});
+// router.post('/login', function (req, res) {
+//     apiLogin.login(req, res);
+// });
 
 //router.get('/selecter/today', auth.loginToken, selecter.today);
+
+router.all('*', auth.loginToken);
 
 
 router

@@ -77,9 +77,14 @@ app.all('*', function (req, res, next) {
 // }
 var API = require('./routers/api/index');
 
+var APILogin = require('./routers/api/login');
+
 var DapengAPI = require('./routers/api/api_dapeng');
 
 var APITest = require('./routers/api_test.js');
+
+
+app.use('/api', APILogin);
 
 app.use('/api', API);
 
