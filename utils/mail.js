@@ -26,16 +26,26 @@ var mailOptions = {
     to: ['326402399@qq.com'],//
     cc: ['allen.wang@gaopeng.com'],
     subject: 'Hello nodemailer',
-    text: "Hello World?",
+    text: "Hello World?",//若有text,则html失效
     html: fs.createReadStream('public/index.html')
 };
 
-transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-        return console.log(error);
-    } else {
+// transporter.sendMail(mailOptions, function (error, info) {
+//     if (error) {
+//         return console.log(error);
+//     } else {
 
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-});
+//     }
+//     console.log('Message %s sent: %s', info.messageId, info.response);
+// });
+
+module.exports = function (options) {
+    transporter.sendMail(options, function (err, info) {
+        if (err) {
+            throw err;
+        }
+
+        console.log('Message %s send:%s', info.messageId, info.response);
+    });
+}
 

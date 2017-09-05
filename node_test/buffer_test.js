@@ -26,6 +26,17 @@ const buf6 = Buffer.from('tést', 'latin1');
 //为了使 Buffer 实例的创建更可靠、更不容易出错，各种 new Buffer() 构造函数已被 废弃，并由 Buffer.from()、Buffer.alloc()、和 Buffer.allocUnsafe() 方法替代。
 
 
-const buf = Buffer.from('Hello World');
+(function () {
+    const buf = Buffer.from('Hello World');
 
-console.log(buf.toString());
+
+    //字节长度
+    console.log(buf.byteLength);
+
+    
+    //中文一个字占3个字节
+    const buf2 = Buffer.from("这是一首简单的小情歌");
+    console.log(buf2.length);//30
+    console.log(buf2.byteLength);//30
+})();
+

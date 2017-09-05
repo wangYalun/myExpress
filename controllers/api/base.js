@@ -133,6 +133,8 @@ Base.checkFilterObj = function (params, filterFields) {
         isNonEmpty: ['arrive_time', 'start_time', 'line_no', 'line_name', 'once_price',
                 'line_mode', 'org_id', 'line_type', 'check_ticket_type', 'default_inventory', 'is_section_price'],
         isNumber: ['default_inventory', 'once_price', 'mileage']
+
+        @return {Object} {errorMsg:"",params:{}}
  */
 Base.checkParams_2 = function (params, validatorObj) {
     var validatorArgs = [];

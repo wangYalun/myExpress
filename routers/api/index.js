@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 
 var selecter = require('../../controllers/api/selecter');
-var apiLogin = require('../../controllers/api_login');
+var login = require('../../controllers/api/login');
 
 var admin_login_log = require('../../controllers/api/admin_login_log');
 
@@ -30,7 +30,7 @@ var auth = require('./auth');
 
 
 router.post('/login', function (req, res) {
-    apiLogin.login(req, res);
+    login.check(req, res);
 });
 
 router.get('/selecter/today', auth.loginToken, selecter.today);
@@ -48,11 +48,11 @@ router
 
 router.get('/test', function (req, res) {
 
-    res.cookie("name","allen");
+    res.cookie("name", "allen");
     res.json(req.headers);
 });
 
-router.get('/download',function(req,res){
+router.get('/download', function (req, res) {
     //实现下载文件功能
     res.download('./index.js');
 });

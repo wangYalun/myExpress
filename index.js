@@ -32,17 +32,19 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 //不能这样使用multer ,详细参考 https://segmentfault.com/q/1010000003050818
 //app.use(multer({ dest: './uploads/' }));// for parsing multipart/form-data
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/images/user')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-});
-var upload = multer({ storage: storage });
-var cpUpload = upload.any();
-app.use(cpUpload);
+
+//详细参考 /routers/api_test.js /file/* post
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './public/images/user')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname)
+//     }
+// });
+// var upload = multer({ storage: storage });
+// var cpUpload = upload.any();
+// app.use(cpUpload);
 
 app.use(cookieParser());
 
@@ -74,7 +76,11 @@ app.all('*', function (req, res, next) {
 // }
 var API = require('./routers/api/index');
 
+var APITest = require('./routers/api_test');
+
 app.use('/api', API);
+
+app.use('/api/test', APITest);
 
 var server = app.listen(8081, function () {
     var host = server.address().address;
