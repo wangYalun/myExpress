@@ -61,3 +61,6 @@ myEmitter.prependListener('event', function () {
     console.log('触发event事件后，我会第一个执行');
 });
 
+myEmitter.prependOnceListener('event', function () {
+
+});

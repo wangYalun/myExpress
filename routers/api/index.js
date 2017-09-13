@@ -1,12 +1,16 @@
 
 var express = require('express');
 
+var fs = require('fs');
+
 var router = express.Router();
 
 var selecter = require('../../controllers/api/selecter');
 var login = require('../../controllers/api/login');
 
 var admin_login_log = require('../../controllers/api/admin_login_log');
+
+
 
 
 var jwt = require('jsonwebtoken');
@@ -55,6 +59,11 @@ router.get('/test', function (req, res) {
 router.get('/download', function (req, res) {
     //实现下载文件功能
     res.download('./index.js');
+});
+
+router.get('/web_log', function (req, res) {
+    fs.appendFile('./logs/remote_debug.log', new Date() + " " + JSON.stringify(req.query) + "\n");
+    res.sendStatus(200);
 });
 
 
