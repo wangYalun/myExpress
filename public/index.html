@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>test</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 
 <body>
     <div id="root">Hello,NodeJS</div>
-
     <script>
-        var postman = axios.create({
-            baseURL: "http://localhost:8080"
-        });
-
-        
+        wx.config({
+            debug:true,
+            appId:"wx8bf59693dee1eb9e",
+            timeStamp:""
+        })
     </script>
 </body>
 
