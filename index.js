@@ -78,9 +78,15 @@ var API = require('./routers/api/index');
 
 var APITest = require('./routers/api_test');
 
+var APIWeixin = require('./routers/api/weixin');
+
 app.use('/api', API);
 
 app.use('/api/test', APITest);
+
+app.use('/api/weixin', APIWeixin);
+
+
 
 var server = app.listen(8081, function () {
     var host = server.address().address;
