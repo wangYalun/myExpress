@@ -2,6 +2,15 @@ var Base = require('../base');
 
 var crypto = require('crypto');
 
+const Wechat = require('wechat-jssdk');
+
+
+const wechatConfig = require('../../../config/weixin/wechat.config').wechatConfig;
+
+const wx = new Wechat(wechatConfig);
+
+
+
 
 module.exports = {
     checkSignature: function (req, res) {
@@ -26,5 +35,13 @@ module.exports = {
         } else {
             res.send("error");
         }
+    },
+    getSignature:function(req,res){
+        wx.jssdk.getSignature(req.query.url).then(function(signatureDate){
+            res.json(signatureDate);
+        });
+    },
+    getSignature2:function(req,res){
+        
     }
 }
