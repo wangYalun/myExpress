@@ -65,7 +65,7 @@ router.post('/file/upload_single', memoryUpload.single('logo'), function (req, r
             if (err) {
                 throw err;
             }
-            res.json({ code: "200" });
+            res.json({ code: "200", data: { imgURL: "http://localhost:8081/api_test_upload/" + req.file.originalname } });
         });
     });
 });

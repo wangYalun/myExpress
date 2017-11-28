@@ -6,6 +6,7 @@ logs
 
 config/database.js
 
+public/api_test_upload
 #node_test
 
 test.js

@@ -1,13 +1,71 @@
+
+
 var Base = require('../base');
 
 var crypto = require('crypto');
 
-const Wechat = require('wechat-jssdk');
+var https = require('https');
+
+var uuid = require('uuid');
+
+//const Wechat = require('wechat-jssdk');
 
 
 const wechatConfig = require('../../../config/weixin/wechat.config').wechatConfig;
 
-const wx = new Wechat(wechatConfig);
+//const wx = new Wechat(wechatConfig);
+
+const createNonceStr = function () {
+    return Math.random().toString(36).substr(2, 15);
+}
+
+const createTimestamp = function () {
+    return Math.floor(+new Date() / 1000);
+}
+
+//获取access token
+
+function myHttpRequest(options) {
+
+
+}
+
+myHttpRequest.get = function (url) {
+
+    var promise = new Promise((resolve, reject) => {
+        const req = https.get(url, res => {
+
+            res.on('data', d => {
+                resolve(JSON.parse(d.toString()));
+            });
+        });
+        req.on('error', e => {
+            reject(e);
+        });
+        req.end();
+    });
+    return promise;
+}
+
+function getAccessToken(appid, appSecret) {
+
+
+
+    var url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appSecret;
+
+    return myHttpRequest.get(url);
+
+}
+
+//获取jsapi_ticket
+function getJSAPITicket(access_token) {
+
+    var url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi";
+
+    return myHttpRequest.get(url);
+}
+
+
 
 
 
@@ -36,12 +94,50 @@ module.exports = {
             res.send("error");
         }
     },
-    getSignature:function(req,res){
-        wx.jssdk.getSignature(req.query.url).then(function(signatureDate){
+    getSignature: function (req, res) {
+        wx.jssdk.getSignature(req.query.url).then(function (signatureDate) {
             res.json(signatureDate);
         });
     },
-    getSignature2:function(req,res){
-        
+    getSignature2: function (req, res) {
+
+    },
+    getConfig: function (req, res) {
+
+        console.log(req.headers.referer);
+
+        getAccessToken(wechatConfig.appId, wechatConfig.appSecret).then(access_res => {
+
+            getJSAPITicket(access_res.access_token).then(ticket_res => {
+
+                var noncestr = createNonceStr();
+                var timestamp = createTimestamp();
+
+                var str = "jsapi_ticket=" + ticket_res
+                    + "&noncestr=" + noncestr
+                    + "&timestamp=" + timestamp
+                    + "&url=" + req.headers.referer;
+
+                //签名
+                var sha1Code = crypto.createHash("sha1");
+                var signature = sha1Code.update(str, 'utf-8').digest("hex");
+
+                var jsText = 'wx.config({debug:true,appId:"' + wechatConfig.appId + '",timestamp:"' + timestamp + '",nonceStr:"' + noncestr + '",signature:"' + signature + '",jsApiList:["onMenuShareTimeline","onMenuShareAppMessage","hideOptionMenu","showMenuItems","hideMenuItems"]})';
+
+                res.set('Content-Type', 'application/x-javascript');
+                res.send(jsText);
+
+            });
+        });
+
+
+
+
+
+
+
     }
+
+
+
 }
