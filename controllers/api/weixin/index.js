@@ -110,14 +110,17 @@ module.exports = {
 
             getJSAPITicket(access_res.access_token).then(ticket_res => {
 
+
+                console.log(ticket_res);
+
                 var noncestr = createNonceStr();
                 var timestamp = createTimestamp();
 
-                var str = "jsapi_ticket=" + ticket_res
+                var str = "jsapi_ticket=" + ticket_res.ticket
                     + "&noncestr=" + noncestr
                     + "&timestamp=" + timestamp
                     + "&url=" + req.headers.referer;
-
+                console.log(str);
                 //签名
                 var sha1Code = crypto.createHash("sha1");
                 var signature = sha1Code.update(str, 'utf-8').digest("hex");
