@@ -11,6 +11,52 @@
     或者
     $ npm run test
 ```
+
+### 配置信息
+```
+    //数据库连接配置，然后修改里面的配置
+    $ cp ./config/database.default.js ./config/database.js
+    //邮件发送配置，然后修改里面的配置
+    $ cp ./config/email.default.js ./config/database.js
+```
+### 登录验证
+
+http请求方式：post
+url:{server}/api/login
+
+参数说明
+
+参数 | 是否必须 | 说明
+---|---
+username | 是 | 用户名
+password | 是 | 密码
+
+返回说明
+```
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "username": "18600699358",
+    "login_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxODYwMDY5OTM1OCIsImlhdCI6MTUwNDIzNjM5MywiZXhwIjoxNTA0MzIyNzkzfQ.fcJMxai1u9fPy0frKATU79Mb5GjafwKUwHrryeCesJ0"
+  }
+}
+```
+### 如何发送login_token
+```
+//可以放到url 查询字符串上
+http://{server}/api/line/commute?login_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxODYwMDY5OTM1OCIsImlhdCI6MTUwNDIzNjM5MywiZXhwIjoxNTA0MzIyNzkzfQ.fcJMxai1u9fPy0frKATU79Mb5GjafwKUwHrryeCesJ0
+//可以放到请求的header 中
+//JavaScript jQuery Ajax
+ var obj={
+     url:'{server}/api/line/commute'
+     method:'get',
+     data:{size:10,index:0},
+     headers:{'login_token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxODYwMDY5OTM1OCIsImlhdCI6MTUwNDIzNjM5MywiZXhwIjoxNTA0MzIyNzkzfQ.fcJMxai1u9fPy0frKATU79Mb5GjafwKUwHrryeCesJ0'}
+ }
+ $.ajax(obj);
+```
+
  
 ### 代码编写
 

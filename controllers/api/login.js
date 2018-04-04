@@ -2,6 +2,8 @@ var admin = require('../../models/admin/user_admin');
 var Base = require('./base');
 var jwt = require('jsonwebtoken');
 
+var axios = require('axios');
+
 module.exports = {
     /**
      * 用户登录,获取login_token
@@ -25,11 +27,30 @@ module.exports = {
                 Base.returnData(res, {}, 403,
                     "用户名或密码错误");
             } else {
+
                 result[0].login_token
-                    = jwt.sign({ uid: result[0].phone_num, iat: Math.floor(Date.now() / 1000) - 30 }, 'allen');
+                    = jwt.sign({ uid: result[0].username, iat: Math.floor(Date.now() / 1000) - 30 }, 'allen', { expiresIn: 60 * 60 * 24 });//设置token 24h后过期
                 Base.returnData(res, result[0]);
             }
         });
+    },
+    /**
+     * 小程序登录验证
+     */
+    xcxLogin: function (req, res) {
+
+        var checkParams = Base.checkParams_2(req.body, {
+            isRequired: ['code']
+        });
+        if (checkParams.errorMsg) {
+            Base.returnData(res, {}, 400, checkParams.errorMsg);
+        }
+        var params = checkParams.params;
+
+        var result = {
+            token: jwt.sign({ code: params.code }, 'allen', { expiresIn: 60 * 60 * 24 })
+        }
+        Base.returnData(res, result);
     }
 }
 

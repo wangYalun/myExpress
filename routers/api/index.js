@@ -11,8 +11,6 @@ var notice = require('../../controllers/api/line/notice');
 
 var reportLine = require('../../controllers/api/report/line');
 
-
-
 var admin_login_log = require('../../controllers/api/admin_login_log');
 
 
@@ -63,10 +61,18 @@ router.get(reportRouterPath, reportLine.getLine)
 router.get('/report/monthly', reportLine.getMonthly);
 
 
-router.get('/web_log', function (req, res) {
-    fs.appendFile('./logs/remote_debug.log', new Date() + " " + JSON.stringify(req.query) + "\n");
-    res.sendStatus(200);
-});
+//APP控制->版本
+
+var version = require("../../controllers/api/app_controller/version");
+var versionPath = "/version";
+
+router.get(versionPath, version.getVersion)
+    .post(versionPath + "/upload_apk", version.uploadAPK)
+    .post(version, version.addVersion)
+
+
+
+
 
 
 

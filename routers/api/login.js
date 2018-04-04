@@ -10,4 +10,8 @@ router.post('/login', function (req, res) {
     login.check(req, res);
 });
 
+router.post("/xcx_login", function (req, res) {
+    login.xcxLogin(req, res);
+});
+
 module.exports = router;

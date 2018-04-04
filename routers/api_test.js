@@ -9,6 +9,8 @@ var path = require('path');
 
 var multer = require('multer');
 
+var ossClient = require('../lib/oss');
+
 
 
 var router = express.Router();
@@ -57,7 +59,7 @@ function writeFile(path, cb) { }
 //上传单个文件
 router.post('/file/upload_single', memoryUpload.single('logo'), function (req, res) {
 
-    fs.open('./public/api_test_upload/' + req.file.originalname, 'a', (err, fd) => {
+    fs.open('./uploads/api_test_upload/' + req.file.originalname, 'a', (err, fd) => {
         if (err) {
             throw err;
         }
@@ -69,6 +71,14 @@ router.post('/file/upload_single', memoryUpload.single('logo'), function (req, r
         });
     });
 });
+
+//上传文件到OSS
+router.post("/file/upload_oss", memoryUpload.single('file'), function (req, res) {
+    ossClient.put('test/' + req.file.originalname, req.file.buffer).then(function (result) {
+        res.json(result);
+    })
+})
+
 //上传多个文件
 router.post('/file/upload_array', memoryUpload.array('logo', 2), function (req, res) {
     req.files.forEach((file, index) => {
@@ -146,6 +156,24 @@ router.post('/file/upload_error_handlling', function (req, res) {
         //TODO 
     });
 });
+
+
+router.get('/web_log', function (req, res) {
+    fs.appendFile('./logs/remote_debug.log', new Date() + " " + JSON.stringify(req.query) + "\n", function (err) {
+        if (err) {
+            //res.sendStatus(404);
+            throw err;
+        } else {
+            res.sendStatus(200);
+        }
+    });
+
+});
+
+
+router.post("/file/upload_oss", function (req, res) {
+
+})
 
 
 

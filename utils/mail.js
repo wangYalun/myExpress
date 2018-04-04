@@ -1,20 +1,11 @@
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 
+var emailConfig=require('../config/email.js');
 
 
 
-var transporter = nodemailer.createTransport({
-    aliases: ["ali"],
-    domains: ["mxhichina.com"],
-    host: 'smtp.mxhichina.com',
-    port: 25,
-    secureConnection: true,
-    auth: {
-        user: 'wangyl@udiannet.com',
-        pass: '18942339954Wang'
-    }
-});
+var transporter = nodemailer.createTransport(emailConfig);
 
 
 // var transporter = nodemailer.createTransport({
