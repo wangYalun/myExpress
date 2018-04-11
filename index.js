@@ -7,10 +7,7 @@ var cookieParser = require('cookie-parser');
 
 var multer = require('multer');
 
-var getLogger=require('./log.js').logger;
-
-
-
+var getLogger = require('./log.js').logger;
 
 
 
@@ -27,7 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //app.use(multer({ dest: './uploads/' }));// for parsing multipart/form-data
 
 
-app.use(require('log4js').connectLogger(getLogger("access"), { level: "info" }));
+//加入访问日志，详细参考：https://log4js-node.github.io/log4js-node/connect-logger.html
+app.use(require('log4js').connectLogger(getLogger("access"), { level: "auto" }));
+
 
 app.use(cookieParser());
 
@@ -40,6 +39,7 @@ app.use(express.static('public'));
 
 // });
 app.all('*', function (req, res, next) {
+    console.log(new Date());
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -84,7 +84,7 @@ var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+    console.log("应用实例，访问地址为 http://%s:%s", host, port);
 
 });
 

@@ -2,12 +2,14 @@
 Thumbs.db
 ehthumbs.db
 node_modules
-logs
+logs/*
 public/static
 public/api_test_upload
 public/upload_files
 
-uploads
+uploads/*
+
+test/*
 
 config/database.js
 config/email.js

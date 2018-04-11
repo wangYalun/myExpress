@@ -13,4 +13,4 @@ var client = require('../lib/oss');
 
 client.put("test/index.html",'../public/index.html').then(function(res){
     console.log(res);
-})
+});

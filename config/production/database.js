@@ -1,0 +1,27 @@
+module.exports = {
+    "default": {
+        host: '119.23.76.55',//填写数据库地址
+        user: 'ydbus', //用户名
+        password: 'ydbus',//
+        database: 'ydbus',// 默认连接数据库 
+        port: 43306
+    },
+    "local": {
+        host: "127.0.0.1",
+        user: "root",
+        password: "",
+        database: "ydbus"
+    },
+    "production_old": {
+        host: "172.18.1.32",
+        user: "ydbusR",
+        password: "uI8sld13k!",
+        database: "ydbus"
+    },
+    "production":{
+        host:"111.230.101.126",
+        user:"tocR",
+        password:"G4fOlWkooFDBreLM",
+        database:"ydbus"
+    }
+};

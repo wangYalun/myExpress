@@ -7,9 +7,15 @@
 
 ### 运行
 ```
+    //调试时用npm run start ,
     $ npm run start
     或者
     $ npm run test
+```
+### 测试环境部署
+
+```
+
 ```
 
 ### 配置信息
@@ -90,6 +96,3 @@ http://{server}/api/line/commute?login_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
 
 - [cli]()
 > 执行文件
-
-- [database]()
-> 数据库文件
