@@ -20,6 +20,10 @@ var auth = require('./auth');
 
 var fs = require('fs');
 
+var memoeryUpload = require('../../utils/memoryUpload');
+
+
+
 
 
 // router.post('/login', function (req, res) {
@@ -67,7 +71,7 @@ var version = require("../../controllers/api/app_controller/version");
 var versionPath = "/version";
 
 router.get(versionPath, version.getVersion)
-    .post(versionPath + "/upload_apk", version.uploadAPK)
+    .post(versionPath + "/upload_apk", memoeryUpload.single('file'), version.uploadAPK)
     .post(version, version.addVersion)
 
 

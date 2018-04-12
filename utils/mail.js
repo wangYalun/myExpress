@@ -36,13 +36,13 @@ function sendmail(options) {
         console.log("from 必须要包含 wangyl@udiannet.com");
         return;
     }
-    // transporter.sendMail(options, function (error, info) {
-    //     if (error) {
-    //         console.log(error);
-    //         return;
-    //     }
-    //     console.log('Message %s send:%s', info.messageIdId, info.response);
-    // });
+    transporter.sendMail(options, function (error, info) {
+        if (error) {
+            console.log(error);
+            return;
+        }
+        console.log('Message %s send:%s', info.messageIdId, info.response);
+    });
 }
 
 module.exports = sendmail;
