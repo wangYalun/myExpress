@@ -20,8 +20,8 @@ switch (env) {
         redisConfigPath = './production/redis.config.js';
         break;
     case "testing":
-        dbConfigPath = ".//database.js";
-        redisConfigPath = './production/redis.config.js';
+        dbConfigPath = "./testing/database.js";
+        redisConfigPath = './testing/redis.config.js';
         break;
     case "development":
     default:
