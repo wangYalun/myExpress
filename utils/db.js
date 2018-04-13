@@ -5,7 +5,7 @@ var DB = require('../lib/db');
 
 
 
-var db = new DB(dbConfig['production_ydbus']);
+var db = new DB(dbConfig['default']);
 
 
 module.exports = db;

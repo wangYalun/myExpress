@@ -11,8 +11,7 @@ uploads/*
 
 test/*
 
-config/database.js
-config/email.js
+
 
 node_test
 

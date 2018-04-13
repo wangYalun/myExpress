@@ -68,15 +68,15 @@ var APITest = require('./routers/api_test.js');
 var v1 = require('./routers/v1/index');
 
 
-app.use('/api', APILogin);
+app.use('/ydbus_node/api', APILogin);
 
-app.use('/api', API);
+app.use('/ydbus_node/api', API);
 
-app.use('/api/dapeng', DapengAPI);
+app.use('/ydbus_node/dapeng', DapengAPI);
 
-app.use('/api_test', APITest);
+app.use('/ydbus_node/api_test', APITest);
 
-app.use('/v1', v1);
+app.use('/ydbus_node/api_v1', v1);
 
 
 
