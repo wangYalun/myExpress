@@ -32,7 +32,9 @@ var memoeryUpload = require('../../utils/memoryUpload');
 
 //router.get('/selecter/today', auth.loginToken, selecter.today);
 
-router.all('*', auth.loginToken);
+router.all('*', auth.checkAdminToken);
+
+
 
 
 router

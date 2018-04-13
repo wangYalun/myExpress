@@ -1,5 +1,9 @@
 var db = require("../../utils/db");
 
+var BaseModel = require('../BaseModel');
+
+
+
 module.exports = {
     getVersion: function (filterObj, limit, offset) {
         return Promise.all([db.count('version', filterObj), db.getWhere('version', filterObj, limit, offset)])
@@ -11,5 +15,11 @@ module.exports = {
                     rows: result
                 };
             })
+    },
+    addVersion: function (data) {
+        data.id = BaseModel.createUUID();
+        data.create_date = BaseModel.getNow();
+        data.modify_date = BaseModel.getNow();
+        return db.insert('version', data);
     }
 }

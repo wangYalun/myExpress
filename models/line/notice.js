@@ -37,6 +37,7 @@ module.exports = {
         return db.update('system_msg', data, { id: id });
     },
     addNotice: function (data) {
+        //如果当前通知生效，其他的通知改为失效状态
         if (data.is_available == '1') {
             db.update('system_msg', { is_available: 0 });
         }

@@ -10,5 +10,14 @@ function login(username, password) {
 }
 
 module.exports = {
-    login: login
+    login: login,
+    /**
+     * 管理后台获取Token
+     */
+    adminLogin: function (phone_num, password) {
+        return db.getWhere("user_admin", {
+            phone_num: phone_num,
+            password_hash: password
+        })
+    }
 }

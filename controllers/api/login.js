@@ -4,6 +4,8 @@ var jwt = require('jsonwebtoken');
 
 var axios = require('axios');
 
+var logger = require('../../log').logger();
+
 module.exports = {
     /**
      * 用户登录,获取login_token
@@ -51,6 +53,23 @@ module.exports = {
             token: jwt.sign({ code: params.code }, 'allen', { expiresIn: 60 * 60 * 24 })
         }
         Base.returnData(res, result);
+    },
+    /**
+     * 优点巴士管理后台获取请求Token
+     */
+    getAdminToken: function (req, res) {
+        var checkParams = Base.checkParams_2(req.body, {
+            isRequired: ['phone_num', 'password_hash']
+        });
+        if (checkParams.errorMsg) {
+            Base.returnData(res, {}, 400, checkParams.errorMsg);
+            return;
+        }
+        var params = checkParams.params;
+        admin.adminLogin(params.phone_num, params.password_hash).then(function (result) {
+            logger.debug(result);
+        })
+
     }
 }
 

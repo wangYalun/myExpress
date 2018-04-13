@@ -1,10 +1,17 @@
 
+/**
+ * 接口拦截层
+ */
+
+
 
 var jwt = require('jsonwebtoken');
 
 
+var db = require('../../utils/db');
 
-//这些请求需要 验证login_token
+var logger = require('../../log').logger();
+
 module.exports = {
     loginToken: function (req, res, next) {
 
@@ -19,5 +26,22 @@ module.exports = {
                 next();
             }
         });
+    },
+    /**
+     * 验证管理后台请求Token
+     */
+    checkAdminToken: function (req, res, next) {
+        var token = (req.body && req.body.token) || (req.query && req.query.token) || req.headers['token'];
+        var phoneNum = (req.body && req.body.phone_num) || (req.query && req.query.phone_num) || req.headers['phone_num'];
+
+        db.getWhere("user_admin", { token: token }).then(function (result) {
+            // logger.debug(result);
+            if (result.length > 0) {
+                next();
+            } else {
+                res.json({ code: 400, msg: "token验证失败！" });
+            }
+        });
+
     }
 }

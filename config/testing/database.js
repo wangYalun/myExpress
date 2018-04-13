@@ -13,9 +13,9 @@ module.exports = {
         database: "ydbus"
     },
     "production": {
-        host: "172.18.1.32",
-        user: "ydbusR",
-        password: "uI8sld13k!",
+        host: "172.18.1.31",
+        user: "ydbus",
+        password: "ydbus",
         database: "ydbus"
     }
 };
