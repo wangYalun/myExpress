@@ -208,10 +208,8 @@ module.exports = {
      */
     checkParam: function (request, paramArr) {
         var it = this;
-        console.log(request.url);
         var params = it.getUrlParam(request.url);
         Object.assign(params, request.body);
-        console.log(params);
         var isOk = true;
         var sb = [];
         for (var item of paramArr) {
@@ -291,5 +289,8 @@ module.exports = {
             code: code
         }
         return response.send(err);
+    },
+    createNonceStr: function () {
+        return Math.random().toString(36).substr(2, 15);
     }
 }

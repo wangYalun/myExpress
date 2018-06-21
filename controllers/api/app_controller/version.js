@@ -18,12 +18,23 @@ module.exports = {
         if (!/android/.test(req.file.mimetype)) {
             Base.returnData(res, {}, 415, "请上传APK文件");
         } else {
-            // ossClient.put('test/' + req.file.originalname, req.file.buffer).then(function (result) {
-            //     Base.returnData(res, result);
-            // });
+            ossClient.put('test/' + req.file.originalname, req.file.buffer).then(function (result) {
+                Base.returnData(res, result);
+            });
         }
 
-        Base.returnData(res);
+        //Base.returnData(res, { apkURL: "https://www.baidu.com" });
+    },
+    /**
+     * 删除刚刚上传到的OSS的APK包
+     */
+    deleteAPK: function (req, res) {
+        //ossClient.delete("")
+        var checkParams = Base.checkParams_2(res.body);
+        ossClient.delete("test/udianbus-fac-release-110-0324-1821.apk")
+            .then(function (result) {
+                Base.returnData(res, result);
+            });
     },
     addVersion: function (req, res) {
         var checkParams = Base.checkParams_2(req.body);

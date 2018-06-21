@@ -1,8 +1,8 @@
 module.exports = {
     "default": {
-        host: '172.18.1.31',//填写数据库地址
-        user: 'ydbus', //用户名
-        password: 'ydbus',//
+        host: '172.31.1.31',//填写数据库地址
+        user: 'tocR', //用户名
+        password: 'G4fOlWkooFDBreLM',//
         database: 'ydbus',// 默认连接数据库 
         port: 3306
     },

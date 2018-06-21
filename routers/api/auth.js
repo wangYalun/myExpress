@@ -12,6 +12,8 @@ var db = require('../../utils/db');
 
 var logger = require('../../log').logger();
 
+var redisClient = require("../../utils/redis");
+
 module.exports = {
     loginToken: function (req, res, next) {
 
@@ -34,14 +36,23 @@ module.exports = {
         var token = (req.body && req.body.token) || (req.query && req.query.token) || req.headers['token'];
         var phoneNum = (req.body && req.body.phone_num) || (req.query && req.query.phone_num) || req.headers['phone_num'];
 
-        db.getWhere("user_admin", { token: token }).then(function (result) {
-            // logger.debug(result);
-            if (result.length > 0) {
+        //验证 token 是否正确 
+        redisClient.command("get " + token).then(function (result) {
+            if (result) {
                 next();
             } else {
                 res.json({ code: 400, msg: "token验证失败！" });
             }
-        });
+        })
+
+        // db.getWhere("user_admin", { token: token }).then(function (result) {
+        //     // logger.debug(result);
+        //     if (result.length > 0) {
+        //         next();
+        //     } else {
+        //         res.json({ code: 400, msg: "token验证失败！" });
+        //     }
+        // });
 
     }
 }

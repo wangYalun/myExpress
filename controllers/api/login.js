@@ -67,7 +67,11 @@ module.exports = {
         }
         var params = checkParams.params;
         admin.adminLogin(params.phone_num, params.password_hash).then(function (result) {
-            logger.debug(result);
+            if (result.token) {
+                Base.returnData(res, result.token)
+            } else {
+                Base.returnData(res, {}, 401);
+            }
         })
 
     }

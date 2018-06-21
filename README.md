@@ -1,22 +1,30 @@
 优点BUS NodeJS 后端服务(测试阶段)
 
-### 安装
+### 安装依赖
 ```
     $ npm install
 ```
 
 ### 运行
 ```
-    //调试时用npm run start ,
-    $ npm run start
+    //调试时用npm run start 
+    $ npm run start-win
     或者
-    $ npm run test
+    $ npm run start-test-win
 ```
 ### 测试环境部署
 
 ```
-
+// 提交代码
+$ git commit -m 'xxxxx'
+//在测试服上
+$ 
 ```
+
+### 生成环境部署和运行
+ ```
+ 
+ ```
 
 ### 配置信息
 ```
