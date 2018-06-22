@@ -45,6 +45,17 @@ redisClient.query("mget aaaaa allen").then(function (res) {
 
 redisClient.command("get allen").then(function (res) { console.log(res) });
 
+redisClient.subscribe("allen", function (channel, message) {
+    console.log("Acept:" + message);
+});
+
+var pubRedis = new RedisClient(redisConfig['default']);
+
+setInterval(function () {
+    pubRedis.publish("allen", new Date().toString());
+}, 10000);
+
+
 // redisClient.command("zrange schools 0 10").then(function (res) { console.log(res) });
 
 // redisClient.command("lpush hahaha fhasdfasd fasdfasdf fahhfhashd fasdfasdfasdf").then(function (res) {
