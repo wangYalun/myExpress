@@ -71,6 +71,8 @@ logger.fatal("this is info level~");
 
 > 发送邮件(utils/mail.js)
 
+
+
 > 基础测试(test/*.js)
 - 基础测试在里面
 
@@ -97,4 +99,5 @@ $ node -v //查看
 ```
 $ .\ab.exe -c 10 -n 1000 http://localhost:8081/ydbus_node/api_v1/manage/message/lis
 t?name=allen
+
 ```
