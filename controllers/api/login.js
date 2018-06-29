@@ -2,9 +2,11 @@ var admin = require('../../models/admin/user_admin');
 var Base = require('./base');
 var jwt = require('jsonwebtoken');
 
-var axios = require('axios');
 
 var logger = require('../../log').logger();
+
+
+
 
 module.exports = {
     /**
@@ -68,6 +70,7 @@ module.exports = {
         var params = checkParams.params;
         admin.adminLogin(params.phone_num, params.password_hash).then(function (result) {
             if (result.token) {
+
                 Base.returnData(res, result.token)
             } else {
                 Base.returnData(res, {}, 401);

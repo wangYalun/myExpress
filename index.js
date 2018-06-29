@@ -14,7 +14,7 @@ var getLogger = require('./log.js').logger;
 app.locals.address = "localhost";
 app.locals.port = "8081";
 app.locals.email = "326402399@qq.com";
-//app.locals.strftime=require("strftime");
+//app.locals.strftime=require("strftime");                                                               
 
 
 

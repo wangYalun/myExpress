@@ -16,9 +16,9 @@ router.post("/manage/message", function (req, res) {
 });
 
 router.post("/manage/message/json", function (req, res) {
-    console.log(req.body)
-    console.log(typeof req.body)
+    console.log(req.body);
+    console.log(typeof req.body);
     res.send(req.body);
-})
+});
 
 module.exports = router;
