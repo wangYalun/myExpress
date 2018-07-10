@@ -80,11 +80,16 @@ var APITest = require('./routers/api_test');
 
 var APIWeixin = require('./routers/api/weixin');
 
+
+var APIMessage = require('./routers/api/message');
+
 app.use('/api', API);
 
 app.use('/api/test', APITest);
 
 app.use('/api/weixin', APIWeixin);
+
+app.use('/api/message', APIMessage);
 
 
 
